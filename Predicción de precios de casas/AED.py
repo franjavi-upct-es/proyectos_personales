@@ -8,13 +8,15 @@ from sklearn.metrics import mean_squared_error, r2_score
 import gc
 import os
 
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
 # Función para limpiar la memoria del archivo
 def clear_cache():
     plt.close('all')  # Close all figures
     gc.collect()  # Force garbage collection to free memory
 
 clear_cache()
-data = pd.read_csv(os.path.join(os.path.dirname(__file__), 'data/housing.csv'))
+data = pd.read_csv('data/housing.csv')
 df = pd.DataFrame(data)
 data = df.rename(columns={'MEDV': 'PRICE'})
 

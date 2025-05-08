@@ -1,23 +1,27 @@
-import cx_Oracle
+import oracledb
+import pandas as pd
 
-# Conexión a la base de datos
-username = 'SYSTEM'
-password = '1234'
-dsn = 'localhost/XE'
+# Activa el modo thick con la ruta del cliente
+oracledb.init_oracle_client(lib_dir=r"C:\Users\fcoja\Downloads\instantclient_23_7")
 
-# Conexión a la base de datos
-connection = cx_Oracle.connect(username, password, dsn)
+# Leer la consulta desde el archivo .sql
+with open("prueba_SQL.sql", "r") as file:
+    sql_query = file.read()
 
-# Creación de un cursor
-cursor = connection.cursor()
+# Conectar a Oracle
+conn = oracledb.connect(
+    user="SYSTEM",
+    password="1234",
+    host="localhost",
+    port=1521,
+    service_name="XE"
+)
 
-# Ejecución de una consulta
-cursor.execute('SELECT * FROM ACTIVIDAD')
+# Ejecutar consulta y cargar resultados en DataFrame
+df = pd.read_sql(sql_query, con=conn)
 
-# Recuperación de los resultados
-for result in cursor:
-    print(result)
+# Mostrar datos
+df.to_excel("prueba.xlsx", index=False, engine="openpyxl")
 
-# Cierre de la conexión
-cursor.close()
-connection.close()
+# Cerrar conexión
+conn.close()
