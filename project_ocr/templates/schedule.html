@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Configurar Automatización OCR</title>
+    <link rel="stylesheet" href="/static/css/styles.css"/>
+</head>
+<body>
+    <div class="container"> 
+        <h1>Programar Ejecución Automática</h1>
+        <form id="scheduleForm">
+            <label>Hora (24h):</label>
+            <input type="number" id="hour" min="0" max="23"></input>
+            <input type="number" id="minute" min="0" max="59" required/>
+            <input type="number" id="second" min="0" max="59" required/>
+            <button type="submit">Guardar horario</button>
+        </form>
+        <div id="status"></div>
+        <button onclick="window.location='/'">Volver</button>
+    </div>
+    <script src="/static/js/schedule.js"></script>
+</body>
+</html>
