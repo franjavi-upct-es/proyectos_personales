@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Configurar Automatización</title>
+    </head>
+    <body>
+        <h2>Configurar Tarea Programada</h2>
+        <form id="configForm">
+            <label>Hora: <input type="number" name="hour" min="0" max="23"></label>
+            <label>Minuto: <input type="number" name="minute" min="0" max="59"></label>
+            <label>Segundo: <input type="number" name="second" min="0" max="59"></label>
+            <button type="submit">Guardar</button>
+        </form>
+        <p id="status"></p>
+        <script src="/static/ocr/js/schedule.js"></script>
+    </body>
+</html>

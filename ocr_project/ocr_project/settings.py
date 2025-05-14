@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+import pytesseract
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -63,4 +64,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'ocr' / 'static']
 
-pytesseract.pytesseract.tesseract_cmd = os.getenv('TESSERACT_CMD', r"C:\\Program Files\\Tesseract-OCR\\tesseract.exe")
+# Ruta al ejecutable de Tesseract
+TESSERACT_CMD = os.getenv('TESSERACT_CMD', r"C:\Program Files\Tesseract-OCR\tesseract.exe")
