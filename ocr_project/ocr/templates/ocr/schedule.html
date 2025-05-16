@@ -1,19 +1,38 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Configurar Automatización</title>
-    </head>
-    <body>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Configurar Automatización</title>
+    <link rel="stylesheet" href="/static/ocr/css/styles.css">
+</head>
+<body>
+    <div class="container">
         <h2>Configurar Tarea Programada</h2>
         <form id="configForm">
-            <label>Hora: <input type="number" name="hour" min="0" max="23"></label>
-            <label>Minuto: <input type="number" name="minute" min="0" max="59"></label>
-            <label>Segundo: <input type="number" name="second" min="0" max="59"></label>
+            <label>Hora:<input type="number" name="hour" min="0" max="23"></label>
+            <label>Minuto:<input type="number" name="minute" min="0" max="59"></label>
+            <label>Segundo:<input type="number" name="second" min="0" max="59"></label>
             <button type="submit">Guardar</button>
         </form>
         <p id="status"></p>
-        <script src="/static/ocr/js/schedule.js"></script>
-    </body>
+        <button class="toggle-theme" onclick="toggleTheme()">Cambiar tema</button>
+    </div>
+    <script src="/static/ocr/js/schedule.js"></script>
+    <script>
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+        }
+
+        (function () {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                document.documentElement.setAttribute('data-theme', savedTheme);
+            }
+        })();
+    </script>
+</body>
 </html>

@@ -21,7 +21,7 @@ def extract_text_from_pdf(pdf_path):
 
 def extract_info(text):
     current_year = datetime.now().year % 100
-    pattern = rf"\b(?:[A-Z]{{{str(current_year)}}}\d{{5}}|AA{str(current_year)}\d{{4}})\b"
+    pattern = rf"\b(?:[A-Z]{{{current_year}}}\d{{5}}|AA{current_year}\d{{4}})\b"
     match = re.search(pattern, text)
     return match.group() if match else None
 

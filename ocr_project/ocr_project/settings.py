@@ -7,6 +7,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 DEBUG = True
 ALLOWED_HOSTS = []
 
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 't+ok5zzj^e$g8)+^1a4r-4xdok+czc1bc32quc7q42&=cmp*u6')
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -66,3 +68,6 @@ STATICFILES_DIRS = [BASE_DIR / 'ocr' / 'static']
 
 # Ruta al ejecutable de Tesseract
 TESSERACT_CMD = os.getenv('TESSERACT_CMD', r"C:\Program Files\Tesseract-OCR\tesseract.exe")
+
+# Configuración de pytesseract
+pytesseract.pytesseract.tesseract_cmd = TESSERACT_CMD

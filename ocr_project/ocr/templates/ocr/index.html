@@ -6,10 +6,28 @@
         <link rel="stylesheet" href="/static/ocr/css/styles.css">
     </head>
     <body>
-        <h1>Subir PDFs de Albaranes</h1>
-        <input type='file' id="pdfs" multiple>
-        <button onclick="enviarPDFs()">Procesar</button>
-        <div id="result"></div>
+        <div>
+            <h1>Subir PDFs de Albaranes</h1>
+            <input type='file' id="pdfs" multiple>
+            <button onclick="enviarPDFs()">Procesar</button>
+            <div id="result"></div>
+            <button class="toggle-theme" onclick="toggleTheme()">Cambiar tema</button>
+        </div>
         <script src='/static/ocr/js/app.js'></script>
+        <script charset="utf-8">
+            function toggleTheme() {
+                const current = document.documentElement.getAttribute('data-theme');
+                const next = current === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', next);
+                localStorage.setItem('theme', next);
+            }
+
+            (function () {
+                const savedTheme = localStorage.getItem('theme');
+                if (savedTheme) {
+                    document.documentElement.setAttribute('data-theme', savedTheme);
+                }
+            })();
+        </script>
     </body>
 </html>
