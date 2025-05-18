@@ -1,30 +1,34 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 export default function UploadForm() {
-  const [results, setResults] = useState([]);
+  const [file, setFile] = useState(null);
 
-  const onSubmit = async e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    const files = e.target.pdfs.files;
-    if (!files.length) return alert('Selecciona al menos un PDF.');
-    const data = new FormData();
-    Array.from(files).forEach(f => data.append('pdfs', f));
-    const res = await fetch('http://localhost:4000/api/procesar', {
-      method: 'POST', body: data
-    });
-    const json = await res.json();
-    setResults(json.data);
+    if (!file) return;
+
+    const form = new FormData();
+    form.append('pdf', file);
+
+    try {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/upload`, {
+        method: 'POST',
+        body: form,
+      });
+      // ... manejar respuesta
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
-    <form onSubmit={onSubmit} className="space-y-2">
-      <input type="file" name="pdfs" multiple />
-      <button type="submit" className="btn">Procesar</button>
-      <div>
-        {results.map((num, i) => (
-          <p key={i}>Archivo {i+1}: {num || 'No detectado'}</p>
-        ))}
-      </div>
+    <form onSubmit={handleSubmit}>
+      <input
+        type="file"
+        accept="application/pdf"
+        onChange={e => setFile(e.target.files[0])}
+      />
+      <button type="submit">Subir PDF</button>
     </form>
   );
 }
