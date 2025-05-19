@@ -9,16 +9,22 @@ export default function App() {
 
   useEffect(() => {
     document.documentElement.className = theme;
+    document.body.style.backgroundColor = theme === 'dark' ? '#121212' : '#fff';
+    document.body.style.color = theme === 'dark' ? '#eee' : '#000';
   }, [theme]);
 
   return (
     <div className="p-4 max-w-lg mx-auto">
-      <div
-        style={{ position: 'fixed', top: '1rem', right: '1rem', cursor: 'pointer' }}
-        onClick={toggleTheme}
-      >
-        <ThemeOption theme={theme} />
-      </div>
+      {/* Use a controlled checkbox for toggling */}
+      <label className="toggle-switch">
+        <input
+          type="checkbox"
+          checked={theme === 'dark'}
+          onChange={toggleTheme}
+        />
+        <span className="slider"></span>
+      </label>
+
       <h1 className="text-2xl font-bold mb-4">OCR Albaranes</h1>
       <UploadForm />
       <hr className="my-6" />

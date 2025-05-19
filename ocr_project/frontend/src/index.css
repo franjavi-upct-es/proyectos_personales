@@ -34,8 +34,8 @@ body {
     background: var(--container-bg);
     padding: 2rem 3rem;
     border-radius: 10px;
-    box-shadow: 0 8px 16px rbga(0,0,0,0.1);
-    max-width: 90%;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    max-width: 100%;
     transition: background-color 0.3s ease;
     animation: slideIn 0.6s ease;
 }
@@ -48,7 +48,7 @@ h1, h2 {
 
 input[type="file"],
 input[type='number'] {
-    width: 95%;
+    width: 96%;
     padding: 0.5rem;
     margin-bottom: 1rem;
     border: 1px solid #ccc;
@@ -96,16 +96,6 @@ button:hover {
   cursor: pointer;
 }
 
-#theme-light{
-  background-color: #fff;
-  border-color: #000;
-}
-
-#theme-dark{
-  background-color: #000;
-  border-color: #fff;
-}
-
 @keyframes slideIn {
     from {
         opacity: 0;
@@ -115,4 +105,51 @@ button:hover {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+body {
+        transition: background-color 0.4s, color 0.4s ease;
+}
+.toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 100px;
+      height: 50px;
+      margin: 50px;
+}
+.toggle-switch input {
+      display: none;
+}
+.slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #eee;
+      border-bottom-style: double;
+      border-color: #fff;
+      border-radius: 30px;
+      transition: 0.4s ease;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 0 10px;
+      font-family: sans-serif;
+      font-weight: bold;
+      color: black;
+}
+.slider::before {
+      content: "☀️";
+}
+input:checked + .slider {
+      background-color: #222;
+      border-color: #fff;
+      border-bottom-style: double;
+      color: white;
+      justify-content: flex-end;
+}
+input:checked + .slider::before {
+      content: "🌙";
 }
