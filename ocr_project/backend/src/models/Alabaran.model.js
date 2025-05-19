@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema } = require('mongoose');
 
 const AlbaranSchema = new Schema({
     archivo:    { type: String, required: true },
@@ -9,4 +9,4 @@ const AlbaranSchema = new Schema({
     creado_en:  { type: Date, default: () => new Date() }
 });
 
-module.exports = model('Albaran', AlbaranSchema)
+// module.exports = model('Albaran', AlbaranSchema)

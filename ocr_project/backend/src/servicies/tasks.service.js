@@ -1,7 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const Albaran = require('../models/Alabaran.model');
-const { extractTextFromPdf, extractInfo, createAndMoveFile } = require('./ocr.service');
+const { saveAlbaran, extractTextFromPdf, extractInfo, createAndMoveFile } = require('./ocr.service');
 
 async function runFolder() {
     const folder = process.env.OCR_FOLDER;
@@ -12,7 +11,7 @@ async function runFolder() {
             const text = await extractTextFromPdf(fullPath);
             const numero = extractInfo(text);
             createAndMoveFile(fullPath, numero, folder);
-            await Albaran.create({ archivo: f, numero });
+            await saveAlbaran(f, numero);
         }
     }
 }

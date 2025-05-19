@@ -2,6 +2,8 @@ const { convert } = require('pdf-poppler');
 const { createWorker } = require('tesseract.js');
 const path = require('path');
 const fs = require('fs');
+const { spawn } = require('child_process');
+const oracledb = require('oracledb');
 
 const worker = createWorker({
     langPath: process.env.TESSDATA_PREFIX,
@@ -60,4 +62,45 @@ function createAndMoveFile(pdfPath, numero, baseDir) {
     if (!fs.existsSync(newPath)) fs.renameSync(pdfPath, newPath);
 }
 
-module.exports = { extractTextFromPdf, extractInfo, createAndMoveFile };
+// Ejecuta el script Python para procesar una carpeta de PDFs
+function processAlbaranesFolder(folderPath) {
+    return new Promise((resolve, reject) => {
+        const scriptPath = path.join(__dirname, '../ocr_albaranes.py');
+        const py = spawn('python', [scriptPath, folderPath]);
+        let output = '';
+        let error = '';
+        py.stdout.on('data', (data) => { output += data.toString(); });
+        py.stderr.on('data', (data) => { error += data.toString(); });
+        py.on('close', (code) => {
+            if (code === 0) {
+                resolve(output);
+            } else {
+                reject(error || output);
+            }
+        });
+    });
+}
+
+const ORACLE_USER = process.env.ORACLE_USER || 'usuario';
+const ORACLE_PASSWORD = process.env.ORACLE_PASSWORD || 'password';
+const ORACLE_CONNECT_STRING = process.env.ORACLE_CONNECT_STRING || 'localhost:1521/ORCLPDB1';
+
+async function saveAlbaran(archivo, numero) {
+    let connection;
+    try {
+        connection = await oracledb.getConnection({
+            user: ORACLE_USER,
+            password: ORACLE_PASSWORD,
+            connectString: ORACLE_CONNECT_STRING
+        });
+        await connection.execute(
+            `INSERT INTO ALBARANES (ARCHIVO, NUMERO) VALUES (:archivo, :numero)`,
+            { archivo, numero },
+            { autoCommit: true }
+        );
+    } finally {
+        if (connection) await connection.close();
+    }
+}
+
+module.exports = { extractTextFromPdf, extractInfo, createAndMoveFile, processAlbaranesFolder, saveAlbaran };
