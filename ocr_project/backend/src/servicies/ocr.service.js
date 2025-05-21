@@ -81,9 +81,9 @@ function processAlbaranesFolder(folderPath) {
     });
 }
 
-const ORACLE_USER = process.env.ORACLE_USER || 'usuario';
-const ORACLE_PASSWORD = process.env.ORACLE_PASSWORD || 'password';
-const ORACLE_CONNECT_STRING = process.env.ORACLE_CONNECT_STRING || 'localhost:1521/ORCLPDB1';
+const ORACLE_USER = process.env.ORACLE_USER || 'SYSTEM';
+const ORACLE_PASSWORD = process.env.ORACLE_PASSWORD || '1234';
+const ORACLE_CONNECT_STRING = process.env.ORACLE_CONNECT_STRING || 'localhost:1521/ORACLEXE';
 
 async function saveAlbaran(archivo, numero) {
     let connection;
